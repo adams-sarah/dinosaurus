@@ -14,7 +14,7 @@ module Dinosaurus
 
     def self.lookup(word)
       return Dinosaurus::Results.new if word.blank?
-      res = get(url_for(word).to_s)
+      res = get(url_for(word).gsub(' ', '%20'))
 
       if res.code == 200
         json = JSON.parse(res.body)
@@ -33,7 +33,7 @@ module Dinosaurus
     def self.url_for(word)
       key = Dinosaurus.configuration.api_key
       raise MissingApiKeyError unless key
-      URI.parse(URI.encode("/api/2/" + key + '/' + word + '/json'))
+      URI.parse(URI.encode("/api/2/" + key + '/' + word + '/json')).to_s
     end
   end
 end
