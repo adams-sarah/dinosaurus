@@ -33,7 +33,7 @@ module Dinosaurus
     def self.url_for(word)
       key = Dinosaurus.configuration.api_key
       raise MissingApiKeyError unless key
-      ur = URI.encode("/api/2/" + key + '/' + word + '/json')
+      ur = URI.parse(URI.encode("/api/2/" + key + '/' + word + '/json')).normalize.to_s
       puts ur
       ur
     end
